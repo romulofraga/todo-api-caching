@@ -13,6 +13,7 @@ namespace TodoApi.Controllers
   [ApiController]
   public class TodoItemsController : ControllerBase
   {
+    private readonly ILogger<TodoItemsController> _logger;
     private readonly TodoContext _context;
 
     public TodoItemsController(TodoContext context)
