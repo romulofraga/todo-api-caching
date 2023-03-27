@@ -13,7 +13,15 @@ namespace TodoApi.Services
 
     public CacheService()
     {
-      var redis = ConnectionMultiplexer.Connect("localhost:6379");
+      string connection = Environment.GetEnvironmentVariable("RedisConnection", EnvironmentVariableTarget.Process);
+      Console.WriteLine($"Connection String: {connection}");
+
+      var configurationOptions = new ConfigurationOptions
+      {
+        EndPoints = { $"{connection}" },
+      };
+      var redis = ConnectionMultiplexer.Connect(configurationOptions);
+
       _cacheDb = redis.GetDatabase();
     }
     public T GetData<T>(string key)
